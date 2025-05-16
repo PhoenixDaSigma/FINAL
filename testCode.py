@@ -32,13 +32,16 @@ def test_setdefault(m, key, default):
 	m.setdefault(key, default)
 	return m[key] == default
 
-def test_pop(m, key, default):
+def test_pop(m, key):
+	value = m[key]
+	returnVal = m.pop(key)
+	if returnVal == value:
+		return True
+	return False
+
+def pop_default(m, key, default):
+	value = default
 	try:
-		if key in m:
-			value = m[key]
-		else:
-			value = default
-	
 		returnVal = m.pop(key, default)
 		if returnVal == value:
 			return True
@@ -202,8 +205,8 @@ def testDeleting(m, m2):
 	print(f"Starting Map: {m}")
 
 	print(f"\n{C}pop(){W}")
-	print(f"Item successfully removed from Map: {result(test_pop(m, 'France', 'modulo'))}")
-	print(f"Successfully returns default value if item not in Map: {result(test_pop(m, 'Madagascar', True))}")
+	print(f"Item successfully removed from Map: {result(test_pop(m, 'France'))}")
+	print(f"Successfully returns default value if item not in Map: {result(pop_default(m, 'Madagascar', 'default'))}")
 	print(f"Raises exception if item not in map and default is None: {result(pop_error(m, 'Madagascar'))}")
 	
 	print(f"\n{C}popitem(){W}")
